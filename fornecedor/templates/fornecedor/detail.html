@@ -1,0 +1,36 @@
+{% extends 'fornecedor/base.html' %}
+{% block title %} - {{fornecedor.nome}} {% endblock %}
+{% block body %}
+<h1>{{fornecedor.nome}}</h1>
+<h3>CNPJ: {{fornecedor.CNPJ}}</h3>
+{% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+{% endif %}
+
+<form action="{% url 'fornecedor:detail' fornecedor.id %}" method="POST">
+    {% csrf_token %} 
+    {% if fornecedor.is_ativo %}
+    <input type="checkbox" id="active" name="active" checked value="{{ fornecedor.is_ativo }}">
+    
+        <label for="active">           
+            <strong>Ativo</strong>
+        </label><br>
+        <input type="submit" value="Desativar">
+            {% else %}
+            <input type="checkbox" id="active" name="active" value="{{ fornecedor.is_ativo }}">
+    
+            <label for="active">           
+                <strong>Ativo</strong>
+            </label><br>
+            <input type="submit" value="Ativar">
+        {% endif %}        
+    
+</form>
+
+<h3>Produtos:</h3>
+<ul>
+    {% for produto in fornecedor.produto_set.all %}
+        <li>{{ produto.nome }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

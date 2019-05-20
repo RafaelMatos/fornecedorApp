@@ -1,0 +1,15 @@
+{% extends 'fornecedor/base.html' %}
+{% block body %}
+{% if all_fornecedores %}
+<h3>Fornecedores:</h3>
+<ul>
+    {% for fornecedor in all_fornecedores %}
+    <li><a href="{% url 'fornecedor:detail' fornecedor.id %}">{{ fornecedor.nome}}</a> 
+        (<a href="{% url 'fornecedor:fornecedor-delete'%} ">delete</a>,
+        <a href="{% url 'fornecedor:fornecedor-update'%} ">update</a>)</li>
+    {% endfor %}
+</ul>
+{% else %}
+<h3>Você não tem nenhum Fornecedor</h3>
+{% endif %}
+{% endblock %}
